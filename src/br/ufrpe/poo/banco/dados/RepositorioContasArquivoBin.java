@@ -96,7 +96,7 @@ public class RepositorioContasArquivoBin implements IRepositorioContas {
 			fosBanco = new FileOutputStream(this.arquivoContas, false);
 			oosBanco = new ObjectOutputStream(fosBanco);
 			IteratorContaAbstrata it = contas.getIterator();
-			while (it.hasNext()) {
+			while (!it.hasNext()) {
 				ContaAbstrata c = it.next();
 				oosBanco.writeObject(c);
 			}
