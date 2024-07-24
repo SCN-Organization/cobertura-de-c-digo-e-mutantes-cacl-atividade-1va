@@ -17,7 +17,7 @@ public class ContaEspecial extends Conta {
 
 	public ContaEspecial(String numero, double saldo) {
 		super(numero, saldo);
-		this.bonus = 0;
+		this.bonus = saldo * 0.1;
 	}
 
 	public double getBonus() {
