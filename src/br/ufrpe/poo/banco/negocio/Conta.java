@@ -15,7 +15,7 @@ public class Conta extends ContaAbstrata {
 	public Conta(String numero, double valor) {
 		super(numero, valor);
 		if(valor < 0) {
-			this.setSaldo(0);
+			this.setSaldo(1);
 		}
 	}
 
