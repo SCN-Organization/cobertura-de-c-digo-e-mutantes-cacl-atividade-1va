@@ -40,7 +40,7 @@ public class RepositorioContasArray implements IRepositorioContas {
 		String n;
 		boolean achou = false;
 		int i = 0;
-		while ((!achou) && (i < this.indice)) {
+		while ((!achou) && (i <= this.indice)) {
 			n = contas[i].getNumero();
 			if (n.equals(numero)) {
 				achou = true;

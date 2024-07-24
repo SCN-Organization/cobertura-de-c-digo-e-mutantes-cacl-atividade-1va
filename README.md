@@ -1,1 +1,1 @@
-Projeto criado com o Eclipse RCP 2023-09 e Java-SE 18.
+Mutante 8 na classe RepositorioContasArray.java, na linha 43, no método getIndice().
