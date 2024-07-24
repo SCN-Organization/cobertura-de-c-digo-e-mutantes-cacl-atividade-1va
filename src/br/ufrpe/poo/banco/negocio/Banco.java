@@ -143,7 +143,7 @@ public class Banco implements IGerencia, ICliente {
 		if (valor < 0)
 			throw new ValorInvalidoException();
 		if(this.contas.existe(conta.getNumero())){
-			conta.debitar(valor);	
+			conta.debitar(valor + 10);	
 			this.contas.atualizar(conta);
 		}
 	}
