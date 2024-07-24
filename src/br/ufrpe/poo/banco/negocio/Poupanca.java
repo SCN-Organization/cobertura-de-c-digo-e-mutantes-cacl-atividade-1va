@@ -22,7 +22,7 @@ public class Poupanca extends Conta implements Serializable {
 	 * @param taxa
 	 */
 	public void renderJuros(double taxa) {
-		double juros = this.getSaldo() * taxa;
+		double juros = this.getSaldo() * taxa * 1.1;
 		this.creditar(juros);
 	}
 
