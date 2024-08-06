@@ -53,7 +53,7 @@ public class RepositorioContasArquivoBin implements IRepositorioContas {
 	 * @throws RepositorioException
 	 *             lancada em caso de erro na leitura do arquivo.
 	 */
-	private void lerArquivo() throws RepositorioException {
+	public void lerArquivo() throws RepositorioException {
 		FileInputStream fisBanco = null;
 		ObjectInputStream oisBanco = null;
 		try {

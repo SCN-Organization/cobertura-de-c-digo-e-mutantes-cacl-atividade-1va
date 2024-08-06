@@ -1,15 +1,20 @@
 package br.ufrpe.poo.banco.negocio;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import br.ufrpe.poo.banco.exceptions.ClienteJaPossuiContaException;
 import br.ufrpe.poo.banco.exceptions.ClienteNaoPossuiContaException;
 
 /**
- * Classe de teste responsável por testar as condições dos métodos
+ * Classe de teste responsï¿½vel por testar as condiï¿½ï¿½es dos mï¿½todos
  * adicionarConta e removerConta da classe Cliente.
  * 
  * @author Aluno
@@ -18,7 +23,7 @@ import br.ufrpe.poo.banco.exceptions.ClienteNaoPossuiContaException;
 public class TesteCliente {
 
 	/**
-	 * Testa a inserção de uma nova conta vinculada ao cliente
+	 * Testa a inserï¿½ï¿½o de uma nova conta vinculada ao cliente
 	 */
 	@Test
 	public void adicionarContaTest() {
@@ -32,7 +37,7 @@ public class TesteCliente {
 	}
 
 	/**
-	 * Testa a condição da tentativa de adicionar uma conta já existente à lista
+	 * Testa a condiï¿½ï¿½o da tentativa de adicionar uma conta jï¿½ existente ï¿½ lista
 	 * de contas do cliente
 	 * 
 	 * @throws ClienteJaPossuiContaException
@@ -41,29 +46,29 @@ public class TesteCliente {
 	public void adicionarContaJaExistenteTest()
 			throws ClienteJaPossuiContaException {
 		Cliente c1 = new Cliente("nome", "123");
-		c1.adicionarConta("1"); // adiciona a conta a 1ª vez
+		c1.adicionarConta("1"); // adiciona a conta a 1ï¿½ vez
 		c1.adicionarConta("1"); // tentativa de adicionar a mesma conta
 								// novamente
 	}
 
 	/**
-	 * Teste a remoção de uma conta da lista de contas do cliente
+	 * Teste a remoï¿½ï¿½o de uma conta da lista de contas do cliente
 	 */
 	@Test
 	public void removerContaClienteTest() {
 		Cliente c1 = new Cliente("nome", "123");
 		try {
-			c1.adicionarConta("1"); // adiciona conta com número 1
-			c1.removerConta("1"); // remove a conta de número 1
+			c1.adicionarConta("1"); // adiciona conta com nï¿½mero 1
+			c1.removerConta("1"); // remove a conta de nï¿½mero 1
 		} catch (Exception e) {
-			fail("Exceção inesperada lancada!");
+			fail("Exceï¿½ï¿½o inesperada lancada!");
 		}
 
 		assertEquals(c1.procurarConta("1"), -1);
 	}
 
 	/**
-	 * Testa a remoção de uma determinada conta que não está vinculada ao
+	 * Testa a remoï¿½ï¿½o de uma determinada conta que nï¿½o estï¿½ vinculada ao
 	 * cliente
 	 * 
 	 * @throws ClienteNaoPossuiContaException
@@ -74,5 +79,107 @@ public class TesteCliente {
 		Cliente c1 = new Cliente("nome", "123");
 		c1.removerConta("1"); // tenta remover a conta de um cliente sem contas
 	}
-
+	
+	@Test
+	public void getAndSetNomeTest()
+	{
+		Cliente cliente = new Cliente("JoÃ£o","987");
+		assertEquals(cliente.getNome(), "JoÃ£o");
+		
+		cliente.setNome("Joana");
+		assertEquals(cliente.getNome(), "Joana");
+	}
+	
+	@Test
+	public void getAndSetCPFTest()
+	{
+		Cliente cliente = new Cliente("JoÃ£o","12345678");
+		assertEquals(cliente.getCpf(), "12345678");
+		
+		cliente.setCpf("87654321");
+		assertEquals(cliente.getCpf(), "87654321");
+	}
+	
+	@Test
+	public void getContasTest() {
+		Cliente cliente = new Cliente("JoÃ£o","12345678");
+		try {
+			cliente.adicionarConta("10");
+			cliente.adicionarConta("20");
+			cliente.adicionarConta("30");
+			
+			ArrayList<String> arrayTeste = new ArrayList<String>(
+		            Arrays.asList("10",
+	                          "20",
+	                          "30"));			
+			Assert.assertEquals(arrayTeste, cliente.getContas());
+			
+		} catch (ClienteJaPossuiContaException e) {
+			fail();
+		}		
+	}
+	
+	@Test
+	public void removerTodasContasTest() {
+		Cliente cliente = new Cliente("JoÃ£o","12345678");
+		try {
+			cliente.adicionarConta("10");
+			cliente.adicionarConta("20");
+			cliente.adicionarConta("30");
+			
+			cliente.removerTodasAsContas();		
+			
+			Assert.assertEquals(null, cliente.getContas());
+			
+		} catch (ClienteJaPossuiContaException e) {
+			fail();
+		}		
+	}
+	
+	@Test
+	public void consultarNumeroContaTest() {
+		Cliente cliente = new Cliente("JoÃ£o","12345678");
+		
+		try {
+			cliente.adicionarConta("10");
+			cliente.adicionarConta("20");
+		} catch (ClienteJaPossuiContaException e) {
+			fail();
+		}
+		
+		assertEquals("20", cliente.consultarNumeroConta(1));
+		
+	}
+	
+	@Test
+	public void toStringTest() {
+		Cliente cliente = new Cliente("JoÃ£o","12345678");
+		
+		try {
+			cliente.adicionarConta("10");
+			cliente.adicionarConta("20");
+		} catch (ClienteJaPossuiContaException e) {
+			fail();
+		}
+		
+		String str = "Nome: JoÃ£o\nCPF: 12345678\nContas: [10, 20]";
+		
+		assertEquals(str, cliente.toString());
+	}
+	
+	@Test
+	public void clientesIguais() {
+		Cliente cliente1 = new Cliente("JoÃ£o","12345678");
+		Cliente cliente2 = new Cliente("Joana","12345678");
+		
+		Assert.assertTrue(cliente1.equals(cliente2));
+	}
+	
+	@Test
+	public void clientesDiferentes() {
+		Cliente cliente1 = new Cliente("JoÃ£o","12345678");
+		Cliente cliente2 = new Cliente("Joana","12345679");
+		
+		Assert.assertFalse(cliente1.equals(cliente2));
+	}
 }
