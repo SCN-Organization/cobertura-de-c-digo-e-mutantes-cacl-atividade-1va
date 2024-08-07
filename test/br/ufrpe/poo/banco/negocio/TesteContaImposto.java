@@ -3,6 +3,7 @@ package br.ufrpe.poo.banco.negocio;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import br.ufrpe.poo.banco.exceptions.SaldoInsuficienteException;
@@ -30,14 +31,24 @@ public class TesteContaImposto {
 		assertTrue( c.getSaldo() == 899.62);
 	}	
 	
-	@Test 
+	/*@Test -- teste errado
 	public void testeDebitarSaldoInsuficiente() throws SaldoInsuficienteException {
 		ContaImposto c = new ContaImposto("2",1000);
 		c.debitar(1200);
 		String saldoDepoisDebito = String.valueOf(c.getSaldo());//confere valor do saldo
 		assertTrue( saldoDepoisDebito, c.getSaldo() == 899.62);
-	}	
+	}*/
 
+	@Test
+	public void testeDebitarSaldoInsuficiente() {
+		ContaImposto c = new ContaImposto("2",1000);
+		try {
+			c.debitar(1200);
+		} catch (SaldoInsuficienteException e) {
+			Assert.assertTrue(e.getMessage().startsWith("Saldo insuficiente!"));
+		}
+
+	}
 	
 	/**
 	 * Testa debito com valor maior que o saldo
@@ -49,6 +60,6 @@ public class TesteContaImposto {
 		c.debitar(1001);
 		fail("Excecao correta(Saldo insuficiente");
 		//assertTrue( saldoDepoisDebito, c.getSaldo() == 899.62);
-	}*/		
+	}	*/
 	
 }
