@@ -182,4 +182,11 @@ public class TesteCliente {
 		
 		Assert.assertFalse(cliente1.equals(cliente2));
 	}
+	
+	@Test
+	public void naoClienteEqualsTest() {
+		Cliente cliente1 = new Cliente("João","12345678");
+		
+		Assert.assertFalse(cliente1.equals("João"));
+	}
 }

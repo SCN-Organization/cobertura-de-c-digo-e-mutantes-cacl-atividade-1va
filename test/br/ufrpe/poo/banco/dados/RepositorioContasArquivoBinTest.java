@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.ufrpe.poo.banco.exceptions.RepositorioException;
+import br.ufrpe.poo.banco.iterator.IteratorContaAbstrata;
 import br.ufrpe.poo.banco.negocio.Conta;
 
-import java.io.FileInputStream;
 
-public class RepositorioContasArquivoBinTest{
+public class RepositorioContasArquivoBinTest {
 
 	private Conta conta;
 	private RepositorioContasArquivoBin repo;
@@ -38,6 +38,18 @@ public class RepositorioContasArquivoBinTest{
 			fail("Falha ao ler o arquivo.");
 		}
 	}
+	
+//	@Test
+//	public void lerArquivoInexistente() {
+//		try {
+//			RepositorioContasArquivoBin newRepo = new RepositorioContasArquivoBin();
+//			newRepo.arquivoContas = new File("file");
+//			newRepo.lerArquivo();
+//			Assert.assertTrue(newRepo.existe("123"));
+//		} catch (RepositorioException e) {
+//			fail("Falha ao ler o arquivo.");
+//		}
+//	}
 
     @Test
     public void remover() {
@@ -46,6 +58,18 @@ public class RepositorioContasArquivoBinTest{
 			Assert.assertTrue(!repo.existe("123"));
 		} catch (RepositorioException e) {
 			fail("Falha em remover conta");
+		}
+    }
+    
+    @Test
+    public void removerContaNaoExistente() {
+    	try {
+			repo.remover("123");
+			Assert.assertTrue(!repo.existe("123"));
+			
+			Assert.assertFalse(repo.remover("123"));
+		} catch (RepositorioException e) {
+			fail();
 		}
     }
 
@@ -59,12 +83,42 @@ public class RepositorioContasArquivoBinTest{
 			repo.atualizar(conta);
 			Assert.assertTrue(conta.getSaldo() == 75.5);
 		} catch (RepositorioException e) {
-			fail("Falha ao atualizar conta");
+			fail();
 		}
     }
     
-//    @Test
-//    public void lerArquivoException() {
-//    	when(repo.lerArquivo()).thenReturn(null); 
-//    }
+    @Test
+    public void atualizarContaNaoExistente() {
+    	
+    	Conta contaFalsa = new Conta("9999999", 10.0);
+    	
+    	try {
+    		Assert.assertFalse(repo.atualizar(contaFalsa));
+		} catch (RepositorioException e) {
+			fail();
+		}
+    }
+    
+    @Test
+    public void getIterator() {
+    	
+    	try {
+			RepositorioContasArquivoBin newRepo = new RepositorioContasArquivoBin();
+			
+			newRepo.inserir(conta);
+			newRepo.inserir(new Conta("876", 23.0));
+			
+			IteratorContaAbstrata iterator = newRepo.getIterator();
+			
+			Assert.assertNotNull(iterator);
+			
+			Assert.assertTrue(iterator.hasNext());
+			
+		} catch (RepositorioException e) {
+			fail();
+		}
+    	
+    
+    }
+    
 }

@@ -42,11 +42,9 @@ public class TesteContaImposto {
 	@Test
 	public void testeDebitarSaldoInsuficiente() {
 		ContaImposto c = new ContaImposto("2",1000);
-		try {
-			c.debitar(1200);
-		} catch (SaldoInsuficienteException e) {
-			Assert.assertTrue(e.getMessage().startsWith("Saldo insuficiente!"));
-		}
+		
+		Assert.assertThrows(SaldoInsuficienteException.class,
+		            ()->{c.debitar(1200);} );
 
 	}
 	
